@@ -46,7 +46,8 @@ run_analysis <- function() {
     
     # final merge
     mergedData = cbind(z, y, x)
-    write.table(mergedData, "mergedData.txt")
+    write.table(mergedData, "mergedData.txt", row.names=FALSE)
+    
     
 }
 
