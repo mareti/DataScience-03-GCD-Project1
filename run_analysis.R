@@ -1,23 +1,28 @@
+# load required libraries
+library(dplyr)
+library(lubridate)
+
 # set working directory
 # setwd("~/OneDrive/Coursera/03 - Getting and Cleaning Data/
 #       DataScience-03-GCD-Project1")
 
 run_analysis <- function() {
+    startTime = now()
+    
     # Part 1: Merge training and test data into a single data set
-    # REMINDER TO REMOVE NROWS TO GET THE FULL DATA SET
     x = rbind( 
-        read.table("./data/test/X_test.txt", nrows=100)
-        , read.table("./data/train/X_train.txt", nrows=100) 
+        read.table("./data/test/X_test.txt")
+        , read.table("./data/train/X_train.txt") 
     )
     
     y = rbind( 
-        read.table("./data/test/y_test.txt", nrows=100)
-        , read.table("./data/train/y_train.txt", nrows=100)
+        read.table("./data/test/y_test.txt")
+        , read.table("./data/train/y_train.txt")
     )
     
     z = rbind(
-        read.table("./data/test/subject_test.txt", nrows=100)
-        , read.table("./data/train/subject_train.txt", nrows=100)
+        read.table("./data/test/subject_test.txt")
+        , read.table("./data/train/subject_train.txt")
     )
     
     # Part 2: Extract mean and standard deviations only
@@ -39,7 +44,7 @@ run_analysis <- function() {
                            )
     
     y[, 1] = activities[y[, 1], 2]
-    names(y) = "Activity Name"
+    names(y) = "ActivityName"
     
     # Part 4: Naming data set
     names(z) = "Subject"
@@ -48,6 +53,17 @@ run_analysis <- function() {
     mergedData = cbind(z, y, x)
     write.table(mergedData, "mergedData.txt", row.names=FALSE)
     
+    # Part 5: Create a second, independent tidy data set
+    # i.e. pivot the data such that you get:
+    # average for each variable, for each activity and each subject
     
+    p5 = mergedData %>%
+        group_by(Subject, ActivityName) %>%
+        summarise_each(funs(mean))
+    
+    write.table(p5, "mergedData_withMeans.txt", row.names=FALSE)
+    
+    endTime = now()
+    print(paste("This function took ", endTime - startTime, "to run."))
 }
 
