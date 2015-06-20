@@ -8,4 +8,4 @@ Data sources:
 * [Originating article](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+) 
 * [Data set](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
 
-If you wish to successfuly run the code, you will need to download the .zip file, extract it to your working directory and rename the folder to "data". The run_analysis.R script will be in the working directory and will reference ./data/ for the data sets. 
+If you wish to successfuly run the code, you will need to download the .zip file, extract it to your working directory and rename the folder to "data". The run_analysis.R script will be in the working directory and will reference "./data" for the data sets. 
